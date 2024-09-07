@@ -1,5 +1,4 @@
-from aiogram import Router, F
-from aiogram.filters import CommandStart
+from aiogram import Router
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 
@@ -8,26 +7,13 @@ from bot.states.exchange_states import CurrencyExchange
 from bot.utils import messages
 from bot.utils.validators import is_valid_amount
 from bot.utils.parser import currency_parser
-from bot.keyboards.client_kbs import currencies_kb, menu_kb
+from bot.keyboards.client_kbs import menu_kb
 
 
-client_rt = Router()
+currency_form_rt = Router()
 
 
-@client_rt.message(CommandStart())
-@client_rt.message(F.text == messages.MENU_BUTTON_TEXT)
-async def start(message: Message, state: FSMContext):
-    await state.set_state(CurrencyExchange.currency)
-
-    currencies_list = await currency_parser.get_currencies_list()
-
-    await message.answer(
-        text=messages.START_TEXT,
-        reply_markup=await currencies_kb(currencies_list)
-    )
-
-
-@client_rt.message(CurrencyExchange.currency)
+@currency_form_rt.message(CurrencyExchange.currency)
 async def enter_amount(message: Message, state: FSMContext):
     currency = message.text
     currencies_list = await currency_parser.get_currencies_list()
@@ -51,7 +37,7 @@ async def enter_amount(message: Message, state: FSMContext):
     )
 
 
-@client_rt.message(CurrencyExchange.amount)
+@currency_form_rt.message(CurrencyExchange.amount)
 async def exchange_rate(message: Message, state: FSMContext):
     amount = message.text.strip().replace(',', '.')
 
@@ -73,7 +59,7 @@ async def exchange_rate(message: Message, state: FSMContext):
         text=messages.EXCHANGE_RATE_TEXT.format(
             amount=data['amount'],
             currency=data['currency'],
-            converted_amount=data['amount'] / rate,
+            converted_amount='{:.2f}'.format(data['amount'] / rate),
             rate=rate
         ),
         reply_markup=menu_kb

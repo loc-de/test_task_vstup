@@ -1,8 +1,8 @@
 from aiogram import Router
 
-from bot.handlers.start import start_rt
-from bot.handlers.currency_form import currency_form_rt
-from bot.handlers.startup import startup_rt
+from bot.handlers.client.start import start_rt
+from bot.handlers.client.currency_form import currency_form_rt
+from bot.handlers.admin.startup import startup_rt
 
 
 def register_routers() -> Router:

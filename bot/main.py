@@ -7,17 +7,12 @@ import asyncio
 from config import TOKEN
 from utils.routers import register_routers
 
-# from utils.parser import currency_parser
-
-
-bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-dp = Dispatcher()
-
-dp.include_router(register_routers())
-
 
 async def main():
-    # await currency_parser.init_session()
+    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    dp = Dispatcher()
+
+    dp.include_router(register_routers())
 
     await bot(DeleteWebhook(drop_pending_updates=True))
     await dp.start_polling(bot)

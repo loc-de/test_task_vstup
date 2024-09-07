@@ -4,12 +4,6 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from bot.utils import messages
 
 
-# choose_currency_kb = ReplyKeyboardMarkup(
-#     [
-#         [KeyboardButton(text='')]
-#     ]
-# )
-
 menu_kb = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text=messages.MENU_BUTTON_TEXT)]
@@ -25,4 +19,7 @@ async def currencies_kb(currencies_list):
     for currency in currencies_list:
         kb.add(KeyboardButton(text=currency))
 
-    return kb.adjust(2).as_markup(input_field_placeholder="обери валюту..", one_time_keyboard=True)
+    return kb.adjust(2).as_markup(
+        input_field_placeholder=messages.CHOOSE_CURRENCY_PLACEHOLDER_TEXT,
+        one_time_keyboard=True
+    )

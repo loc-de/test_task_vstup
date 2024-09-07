@@ -8,8 +8,7 @@ menu_kb = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text=messages.MENU_BUTTON_TEXT)]
     ],
-    resize_keyboard=True,
-    one_time_keyboard=True
+    resize_keyboard=True
 )
 
 
@@ -20,6 +19,5 @@ async def currencies_kb(currencies_list):
         kb.add(KeyboardButton(text=currency))
 
     return kb.adjust(2).as_markup(
-        input_field_placeholder=messages.CHOOSE_CURRENCY_PLACEHOLDER_TEXT,
-        one_time_keyboard=True
+        input_field_placeholder=messages.CHOOSE_CURRENCY_PLACEHOLDER_TEXT
     )

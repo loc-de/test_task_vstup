@@ -4,7 +4,7 @@ from aiogram.enums.parse_mode import ParseMode
 from aiogram.client.default import DefaultBotProperties
 
 import asyncio
-from config import TOKEN
+from env import TOKEN
 from utils.routers import register_routers
 
 
